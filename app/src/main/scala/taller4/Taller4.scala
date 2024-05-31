@@ -14,11 +14,11 @@ object Taller4{
   def saludo() = "Taller 4"
 
   def main(args: Array[String]): Unit = {
-    println(saludo())
-    println(
-      withWarmer(new Warmer.Default) measure {
-        (1 to 100000000).toArray
-      }
-    )
+    val objnew = new Newton()
+    val expr = Suma(Prod(Numero(2), Atomo('x')), Numero(3))
+    println(objnew.mostrar(expr))
+
+    val expr1 = Suma(Atomo('x'), Numero(2))
+    println(objnew.mostrar(expr1))
   }
  }
