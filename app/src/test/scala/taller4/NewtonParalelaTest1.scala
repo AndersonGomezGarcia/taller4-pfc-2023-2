@@ -6,8 +6,9 @@ import org.scalatest.exceptions.TestFailedException
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class NewtonTest1 extends AnyFunSuite{
-  val ObjNew = new Newton()
+class NewtonParalelaTest1 extends AnyFunSuite{
+
+  val ObjNew = new NewtonParalela()
   val expr1 = Suma( Atomo ('x') , Numero (2) )
   val expr2 = Prod( Atomo ('x') ,  Atomo ('x') )
   val expr3 = Suma( expr1 , Expo ( expr2 , Numero ( 5 ) ) )

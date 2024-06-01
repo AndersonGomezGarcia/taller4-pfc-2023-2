@@ -8,6 +8,8 @@ case class Resta ( e1 : Expr , e2 : Expr ) extends Expr
 case class Div ( e1 : Expr , e2 : Expr ) extends Expr
 case class Expo ( e1 : Expr , e2 : Expr ) extends Expr
 case class Logaritmo ( e1 : Expr ) extends Expr
+
+
 class Newton {
   def mostrar (e : Expr ) : String = {
     e match {
