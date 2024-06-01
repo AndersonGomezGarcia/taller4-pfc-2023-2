@@ -45,4 +45,70 @@ class Newton {
     case Logaritmo(e1) => math.log(evaluar(e1, a, v))
   }
 
+  def limpiar(f: Expr): Expr = f match {
+    case Suma(Numero(0), e2) => limpiar(e2)
+    case Suma(e1, Numero(0)) => limpiar(e1)
+    case Suma(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+      (l1, l2) match {
+        case (Numero(0), e2) => e2
+        case (e1, Numero(0)) => e1
+        case _ => Suma(l1, l2)
+      }
+    case Prod(Numero(1), e2) => limpiar(e2)
+    case Prod(e1, Numero(1)) => limpiar(e1)
+    case Prod(Numero(0),_) => Numero(0)
+    case Prod(_, Numero(0)) => Numero(0)
+    case Prod(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+      (l1, l2) match {
+        case (Numero(1), e2) => e2
+        case (e1, Numero(1)) => e1
+        case (Numero(0),_) => Numero(0)
+        case (_, Numero(0)) => Numero(0)
+        case _   => Prod(l1, l2)
+      }
+    case Resta(e1, Numero(0)) => limpiar(e1)
+    case Resta(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+      if (l1 == l2) Numero(0)
+      else Resta(l1, l2)
+    case Div(Numero(0),_) => Numero(0)
+    case Div(e1, Numero(1)) => limpiar(e1)
+    case Div(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+      if (l2 == Numero(1)) l1
+      else Div(l1, l2)
+    case Expo(e1, Numero(1)) => limpiar(e1)
+    case Expo(Numero(1),_) => Numero(1)
+    case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
+    case Logaritmo(e1) => Logaritmo(limpiar(e1))
+    case _ => f // Para Numero y Atomo, retornamos la expresión tal como está
+  }
+
+  def raizNewton(f: Expr, a: Atomo, x0: Double, ba: (Expr, Atomo, Double) => Boolean): Double = {
+    @annotation.tailrec
+    def iter(x: Double): Double = {
+      // Evaluamos la función y su derivada en el punto actual
+      val fx = evaluar(f, a, x)
+      val dfx = evaluar(derivar(f, a), a, x)
+
+      // Si la aproximación es suficientemente buena, retornamos el punto actual
+      if (ba(f, a, x)) x
+      else {
+        // Calculamos el siguiente punto candidato utilizando el método de Newton
+        val x1 = x - fx / dfx
+        iter(x1) // Repetimos el proceso con el nuevo punto candidato
+      }
+    }
+    iter(x0) // Iniciamos la iteración desde el punto inicial
+  }
+  def buenaAprox(f: Expr, a: Atomo, d: Double): Boolean = {
+    math.abs(evaluar(f, a, d)) < 0.001
+  }
+
 }

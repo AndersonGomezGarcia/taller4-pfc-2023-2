@@ -35,4 +35,8 @@ class NewtonTest2 extends AnyFunSuite{
     assert(ObjNew.mostrar(expr10) == "(0.0 + ((0.0 * x) + (3.0 * 1.0)))")
   }
 
+  test("Newton Derivar 5"){
+    assert(ObjNew.mostrar(ObjNew.derivar(Numero(5.0), Atomo('x'))) == "0.0")
+  }
+
 }
