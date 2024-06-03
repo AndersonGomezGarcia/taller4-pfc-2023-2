@@ -26,7 +26,7 @@ class Benchmarking {
       Key.exec.benchRuns := 20,
       Key.verbose := true,
     ) withWarmer new Warmer.Default measure {
-      objParalelizado.raizNewton(e5, Atomo('x'), 50000000.0, objParalelizado.buenaAprox)
+      objParalelizado.raizNewtonParalelo(e5, Atomo('x'), 50000000.0, objParalelizado.buenaAprox)
     }
 
     val timeParalelaDer = config(
@@ -50,5 +50,6 @@ class Benchmarking {
     println(s"Tiempo de ejecución P: $timeParalela")
     println(s"Tiempo de ejecución P der: $timeParalelaDer")
     println(s"Tiempo de ejecución S  der: $timeSecuencialDer")
+
   }
 }

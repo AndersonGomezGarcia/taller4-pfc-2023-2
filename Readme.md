@@ -1,3 +1,6 @@
-# Repositorio base
 
-Este repositorio tiene las configuraciones y librerías necesarias para trabajar concurrencia
+INTEGRANTES: 
+
+Nicolas Rodriguez Romero #2266071
+Jhon Alexis Ruiz # 2266014
+Anderson Gomez # 2266242
